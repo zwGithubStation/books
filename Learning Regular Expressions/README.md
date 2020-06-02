@@ -21,9 +21,11 @@ https://regex101.com/
 **grep略影**  
 grep是一种用来对文件或标准输入文本进行文字搜索的Unix工具。  
 grep支持基本(-G)、扩展(-E)和Perl(-P)正则表达式。  
-**e.g. ** 
+**e.g.**   
 我们想在一句话（Hello，my name is aming.)中匹配中间的一段字符串（my name is) 可以这样写正则表达式:  
-    echo "Hello, my name is aming."|grep -P '(?<=Hello, ).*(?= aming.)'   
+```shell
+echo "Hello, my name is aming."|grep -P '(?<=Hello, ).*(?= aming.)'
+```   
 
 
 
