@@ -42,7 +42,7 @@ echo "Hello, my name is aming."|grep -P '(?<=Hello, ).*(?= aming.)'
 # 第三章 匹配一组字符   
 **元字符[和元字符]**   
 使用元字符[和元字符]来定义一个字符集合。出现在其中的所有字符都是该集合的组成部分，必须匹配其中某个成员。  
-`文本`   
+`示例文本`   
 ```shell
 sales1.xls  
 orders3.xls  
