@@ -308,4 +308,32 @@ living in <b>AK</b> and <b>HI</b>.
 <b>AK</b> 
 <b>HI</b>
 ```    
-  
+ 
+
+# 第六章 位置匹配  
+
+**6.1 单词边界**  
+
+**正则表达式提供了专用的单词边界（world boundary），记为\b。它匹配的是“单词边界”位置，而不是字符。也就是说，\b能够匹配这样的位置：一边是单词字符，另一边不是单词字符。**  
+清晰的附图描述，见：https://www.cnblogs.com/gaara0305/p/10027343.html  
+
+
+
+- 一般情况下，“单词字符”的解释是\w能匹配的字符。也即\b的位置受限于\w的定义。在JavaScript、PHP、Python 2、Ruby中，\w只能匹配[0-9A-Za-z_]，所以像e-mail、M.I.T、抑或是中文单词等无法符合匹配条件，所以应该结合具体的使用环境设计正则表达式，避免匹配结果不符合预期  
+- 与单词边界\b对应的是非单词边界\B，两者的关系是，同一种语言中，不管\b是如何规定的，\b能匹配到的位置，\B就不能匹配，反之亦然  
+
+`示例文本`   
+```shell
+Please enter the nine-digit id as it 
+appears on your color - coded pass-key.
+```
+`正则表达式`  
+```shell 
+\B-\B
+```
+`结果`  
+```shell 
+"color - coded"处的-会被匹配到，"nine-digit"中的-并不被匹配
+```   
+
+**6.2 字符串边界**  
