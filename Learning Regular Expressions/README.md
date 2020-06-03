@@ -191,3 +191,121 @@ sam.xls
 使用[[]]两对方括号，是使用POSIX字符类所必须的，这点很重要。POSIX字符类必须出现在[:和:]之间，外层的[]为字符集合元字符。   
 
 
+# 第五章 重复匹配  
+
+**5.1 匹配一个或多个字符**  
+
+使用元字符+  
+
+
+- +匹配某个字符或字符集合的一次或多次重复   
+
+`示例文本`   
+```shell
+send email to ben@forta.com or 
+ben.forta@forta.com. For questions about a 
+book use support@forta.com. If your message  
+is urgent try ben@urgent.forta.com. Feel free  
+to send unsolicited email to 
+spam@forta.com(wouldn't it be nice if 
+it were that simple, huh?). 
+```
+`正则表达式`  
+```shell 
+[\w.]+@[\w.]+\.\w+  
+```
+`结果(只显示匹配项)`  
+```shell 
+ben@forta.com 
+ben.forta@forta.com
+support@forta.com
+ben@urgent.forta.com
+spam@forta.com   
+```   
+
+**5.2 匹配零个或多个字符**  
+
+使用元字符*  
+
+
+- *匹配某个字符或字符集合的零次或多次重复   
+
+`示例文本`   
+```shell
+hello .ben@forta.com is my email address. 
+```
+`正则表达式`  
+```shell 
+[\w]+[\w.]*@[\w.]+\.\w+  
+```
+`结果(只显示匹配项)`  
+```shell 
+ben@forta.com  
+```   
+
+**5.3 匹配零个或一个字符**  
+
+使用元字符?  
+
+
+- ?匹配某个字符或字符集合的零次或一次出现，最多不超过一次，非常适合匹配一段文本中某个特定的可选字符     
+
+`示例文本`   
+```shell
+The URL is http://regex101.com/, to connect 
+securely use https://regex101.com/ instead.
+```
+`正则表达式`  
+```shell 
+https?:\/\/[\w.\/]+ 
+```
+`结果(只显示匹配项)`  
+```shell 
+http://regex101.com/ 
+https://regex101.com/ 
+```    
+
+**5.4 匹配的重复次数**  
+
+鉴于5.1-5.3使用的元字符存在以下局限：   
+
+
+- +和*匹配的字符个数没有上限,无法设定匹配字符个数的最大值
+- +、*、?匹配的字符最小数目是0或者1个,无法设定匹配字符个数的最小值
+- 无法指定具体的匹配次数  
+
+正则表达式允许使用重复范围(interval)，使用元字符{和}指定   
+
+
+- 可指定具体的匹配次数，e.g. #[[:xdigit:]]{6} 参见P46实例
+- 可指定期望的区间范围，e.g. \d{1,2}[-\/]\d{1,2}[-\/]\d{2,4} 参见P47实例
+- 可指定至少重复多少次，e.g. \d+: \$\d{3,}\.\d{2} 参见P48实例
+
+**5.5 防止过度匹配**  
+
+- *和+是所谓“贪婪型(greedy)元字符(也称为量词quantifier)”，其匹配行为会尽可能从一段文本的开头一直匹配到末尾，而非匹配到第一个就停止
+- 在不需要这种贪婪行为时，改用量词的懒惰型版本，匹配尽可能少的字符，使用方式是在量词后加?
+
+
+| 贪婪型量词 | 懒惰型量词 |
+| ----- | ----- |
+| * | *? |
+| + | +? |
+| {n,} | {n,}? |  
+
+
+`示例文本`   
+```shell
+This offer is not available to customers 
+living in <b>AK</b> and <b>HI</b>.
+```
+`正则表达式`  
+```shell 
+<[Bb]>.*?<\/[Bb]> 
+```
+`结果(只显示匹配项)`  
+```shell 
+<b>AK</b> 
+<b>HI</b>
+```    
+  
