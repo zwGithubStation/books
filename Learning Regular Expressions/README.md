@@ -336,4 +336,67 @@ appears on your color - coded pass-key.
 "color - coded"处的-会被匹配到，"nine-digit"中的-并不被匹配
 ```   
 
-**6.2 字符串边界**  
+**6.2 字符串边界**    
+
+**正则表达式提供了字符串边界，用于在字符串的首位进行模式匹配。字符串边界元字符有两个:^代表字符串开头，$代表字符串结尾。**  
+**字符串的定义，当前默认为整个完整文本** 
+
+`示例文本`   
+```shell
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions targetNamespace="http://tips.cf" 
+xmlns:impl="http://tips.cf" xmlns:intf="http://tips.cf"
+xmlns:apachesoap="http://xml.apache.org/xml-soap"
+```
+`正则表达式`  
+```shell 
+^\s*<\?xml.*\?>
+```
+`结果`  
+```shell 
+<?xml version="1.0" encoding="UTF-8" ?>
+```  
+
+**6.3 字符串边界多行模式**   
+
+**多行模式迫使正则表达式引擎将换行符视为字符串分割符，这样一来。^既可以匹配字符串的开头，也可以匹配换行符之后的起始位置；$不仅可以匹配字符串结尾，还能匹配换行符后的结束位置**   
+
+**使用(?m)启用多行模式，(?m)必须出现在整个模式的最前面**  
+
+`示例文本`   
+```C
+int lengthOfLastWord(char * s){
+	int i,cnt=0;
+	
+	// judge 1
+	if (!s || strlen(s) == 0)
+		return 0;
+
+	i = strlen(s)-1;
+
+	while (i >= 0 && s[i] == ' ')
+		i--;
+
+	// judge 2
+	if (i == 0 && s[i] == ' ')
+		return 0;
+
+	while (i >= 0 && s[i] != ' ')
+	{
+		cnt++;
+		i--;
+	}
+
+	return cnt;
+}
+
+```
+`正则表达式`  
+```shell 
+(?m)^\s*\/\/.*$
+```
+`结果`  
+```C 
+// judge 1
+// judge 2
+```  
