@@ -465,9 +465,72 @@ with 32 bytes of data:
 **比如上例中的\d{1,2}并没有排除00这种无效数字字符串，考虑使用AND语义排除之？ 当然不实现AND也可以做啦**  
 
 
-# 第八章 反向引用  
+# 第八章 反向引用   
 
+**8.1 反向引用**
 
+理解为什么需要反向引用，可举例说明。     
+HTML使用标题标签(h1~h6,以及配套的结束标签)来排版Web页面的标题文字，假设要把所有标题文字查找出来，不管几级标题，我们首先尝试下面的方式：  
+
+`示例文本`   
+```shell
+<body>
+<h1>Welcome to my Homepage</h1>
+Content is divided into two sections:<br/>
+<h2>SQL</h2>
+Information about SQL.
+<h2>RegEx</h2>
+Information about Regular Expressions.
+</body>
+```
+`正则表达式`  
+```shell 
+<[Hh][1-6]>.*?<\/[Hh][1-6]>
+```
+`结果`  
+```shell 
+<h1>Welcome to my Homepage</h1>
+<h2>SQL</h2>
+<h2>RegEx</h2>
+```  
+
+上面的例子似乎功能OK，但如果某一行的标题格式书写有误如下：  
+
+```shell 
+<h2>RegEx</h3>
+```
+上述的正则表达式仍会匹配该非法行。  
+
+**问题在于匹配的第二部分(用来匹配结束标签的那一部分)对匹配的第一部分(用来匹配开始标签的那部分)一无所知。这正是反向引用大显身手的地方。**    
+
+反向引用的场景：
+**我们使用反向引用，来匹配和某一子表达式相同的内容**   
+
+反向引用的用法：
+**\1匹配模式中使用的第一个子表达式，\2匹配第二个子表达式，\3匹配第三个，以此类推**   
+
+此时不符合语法的非法行不会被匹配到：  
+  
+`示例文本`   
+```shell
+<body>
+<h1>Welcome to my Homepage</h1>
+Content is divided into two sections:<br/>
+<h2>SQL</h2>
+Information about SQL.
+<h2>RegEx</h3>
+Information about Regular Expressions.
+</body>
+```
+`正则表达式`  
+```shell 
+<([Hh][1-6])>.*?<\/\1>
+```
+`结果`  
+```shell 
+<h1>Welcome to my Homepage</h1>
+<h2>SQL</h2>
+```  
 
 
 # 第九章 环视 
