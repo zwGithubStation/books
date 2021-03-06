@@ -7,7 +7,7 @@ URL的基本介绍(协议、域名、端口、资源路径等等，以及域名�
 https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/What_is_a_URL  
 https://www.verisign.com/en_US/website-presence/online/what-is-a-url/index.xhtml   
 <p align="center">
-  <img width="175" height="120" src="https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png">
+  <img width="1120" height="780" src="https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png">
 </p>
 
 **1. OSI与TCP/IP协议分层体系**
