@@ -3,7 +3,19 @@
   
 
 # 课时一 在浏览器上输入URL到主页显示，经历了哪些步骤  
- 
+URL的基本介绍(协议、域名、端口、资源路径等等，以及域名的进一步介绍),可参考：  
+https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/What_is_a_URL  
+https://www.verisign.com/en_US/website-presence/online/what-is-a-url/index.xhtml   
+
+
+**1. OSI与TCP/IP协议分层体系**
+
+**2. 协议与软件实现层面的关系**  
+
+**3. 常用Web网络协议的功能** 
+
+
+
 
 # 课时二 如何抓包分析网络报文   
 **普通文本(plain text)也是正则表达式，匹配其本身**  
