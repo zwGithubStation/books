@@ -8,13 +8,57 @@ https://developer.mozilla.org/zh-CN/docs/Learn/Common_questions/What_is_a_URL
 https://www.verisign.com/en_US/website-presence/online/what-is-a-url/index.xhtml   
 ![Image text](https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png)
 
-**1. OSI与TCP/IP协议分层体系**
+**A. 核心内容：**
+**1. OSI与TCP/IP协议分层体系** 
+层级与协议并不一一对应，有的协议存在跨层实现  
 
 **2. 协议与软件实现层面的关系**  
 
 **3. 常用Web网络协议的功能** 
 
+**B.章节**
+**B.1 浏览器发起HTTP请求的逻辑**  
+B.1.1 浏览器输入URL或者点击链接URL后，第一步是**域名解析为IP地址** 
+关于域名系统(DNS)的原理，可参考：  
+https://draveness.me/dns-coredns/  
+关于DNS主要使用UDP的历史渊源，可参考：  
+https://draveness.me/whys-the-design-dns-udp-tcp/  
+当然各级大致有自己的缓存，比如浏览器本身就可以缓存了域名对应的IP地址  
+该流程对应PPT中的下图部分：  
+![Image text](https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png)  
 
+B.1.2 http请求转化为传入IP地址的一个TCP连接  
+通过IP地址，建立与服务的连接，服务可以是一个的负载均衡入口，其后台有一个水平扩展的集群(各个server的数据/代码/程序一致，提供同样的服务能力)，根据具体的请求类型，可以在server上直行下盘的数据库操作、内存上的读写缓存操作、亦或是kafka队列操作(mySQL/redis/kafka属于在TCP之上的协议)  
+当然，图片、文件、css请求等也可能通过CDN访问用户就近的server，其连接server的过程同质于上述流程  
+该流程对应PPT中的下图部分：  
+![Image text](https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png)  
+
+B.1.3 当然一个URL请求大概率不会只触发一个服务请求/建立一个TCP连接，这与http请求的DOM树划分对应，如果DOM树分解产生多个各类请求(html/js/css等)，则会触发多个B.1.2介绍的服务请求；最终各个请求结果在浏览器上组装呈现。  
+http请求的DOM树划分、请求结果的合并呈现，不作为理解重点，了解即可。  
+该流程对应PPT中的下图部分：   
+![Image text](https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png)  
+
+**B.2 OSI协议分层体系**  
+B.2.1 OSI七层网络协议分层  
+![Image text](https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png)   
+
+B.2.2 重要的5层  
+![Image text](https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png)    
+
+B.2.3 负载均衡所在的层级 7层负载均衡、4层负载均衡的概念  
+图如B.2.1所示  
+四层负载均衡工作在UDP/TCP上，不会去解析上层的诸如tsl/ssl(不编译openssl库)、http协议的内容，只会建立两个TCP连接(负载均衡与客户端、负载均衡与服务器)或两个UDP session.  
+LVS、iptables/ipvs可以工作在网络层或传输层，区别是网络层就只有一个TCP连接/UDP session(客户端与服务器)，而传输层就存在两个TCP连接/UDP session(负载均衡与客户端、负载均衡与服务器)，当然他们都不会解析上层的诸如tsl/ssl(不编译openssl库)、http协议的内容  
+如图Nginx、HAProxy、Envoy可以实现四层负载均衡,也可以实现七层负载均衡。 工作在七层则可以解析tsl/ssl、http协议，将http协议直接解析为cgi(Common Gateway Interface,可以理解为http请求最终在server上所触发的动作，可以是python脚本，也可以是C/C++程序)，抑或是解析转换为redis操作。 e.g. python的uWSGI  
+
+B.2.4 http、TSL/SSL、TCP、IP诸协议的工作流程图见课件PPT，不再赘述  
+http:客户端发请求，服务端做响应; req/res都包含头+资源  
+TLS/SSL:公开的消息通道中进行加密传输. c和s先协商出只有双方才知道的消息秘钥，后面传输的实际内容不解密无法看到  
+TCP: 三次握手; 数据分割多消息传输,可靠传输  
+IP: 路由器寻址最优路径, icmp等辅助实现传输   
+
+
+**B.3 通过抓包缩小问题边界**   
 
 
 # 课时二 如何抓包分析网络报文   
