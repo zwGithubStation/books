@@ -85,13 +85,25 @@ BPF表达式的使用不做细化了解。 本节同上，需使用时再做细�
 
 # 课时三 RESTful API该如何设计  
 **3.1 Restful API的设计原则**   
-  
+RESTful原则的细致了解，需要其他材料的辅助深化学习   
+关于非侵入式/侵入式的服务治理，PPT上的总结比较重要  
+
 **3.2 HTTP常见方法的含义**  
+幂等方法的概念  
+常见方法的介绍见PPT  
+WEBDAV基本方法介绍见PPT，webdav的细致了解需要其他材料的辅助深化学习  
 **3.3 HTTP常见响应码的含义**  
+1xx、2xx、3xx、4xx、5xx这些错误码含义，基础见PPT，细致了解需要其他材料的辅助深化学习  
 **3.4 HTTP常见头部的含义**  
+七层Proxy转发HTTP消息流程：  
+![Image text](https://raw.githubusercontent.com/zwGithubStation/books/master/Network_Protocal_two_days/pic/what_is_URL.png)   
 
+如何传递客户端IP地址的问题见PPT标注  
+长连接相较短连接的优势及使用场景，见PPT标注  
+理解HTTP方法/响应码是设计符合RESTful架构API的基础，也使服务的可扩展性更好，也是k8s这样的第三方开源工具能更好管理PASS服务的基础  
 
-# 课时四 哪些HTTP头部配合浏览器增强了Web安全
+# 课时四 哪些HTTP头部配合浏览器增强了Web安全   
+
 
 # 课时五 WAF防火墙究竟是怎样工作的？  
 
